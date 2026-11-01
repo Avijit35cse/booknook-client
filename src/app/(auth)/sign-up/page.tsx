@@ -12,23 +12,49 @@ const SignUpPage = () => {
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    
+    //Loading state & Error Message state
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+
+
 
     const handleSubmit = async(e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const {data, error} = await authClient.signUp.email({
+        setErrorMessage("")
+        if(password.length < 8){
+            setErrorMessage("Password must be at least 8 characters.")
+            return;
+        }
+
+        setIsLoading(true);
+         try{
+
+            const {data, error} = await authClient.signUp.email({
             name,
             email,
             password,
         });
 
         if (error) {
-            console.error("Sign up failed:", error.message);
+            setErrorMessage(error.message || "Registration failed.")
             return;
         }
 
-        console.log("Sign up successful:", data);
+        console.log("Registration successful:", data);
         router.push("/sign-in");
+
+         } catch(error){
+            setErrorMessage("Something went wrong. Please try again.")
+            console.error("Registration error:", error);
+            
+         } finally {
+            setIsLoading(false);
+         }
+
+        
     }
 
     return (
@@ -52,7 +78,14 @@ const SignUpPage = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <button type="submit">Sign Up</button>
+                {errorMessage && (
+                    <p className="text-sm text-red-500">
+                        {errorMessage}
+                    </p>
+                )}
+                <button type="submit" disabled={isLoading}>
+                    {isLoading ? "Signing Up..." : "Sign Up"}
+                    </button>
             </form>
         </div>
     );
