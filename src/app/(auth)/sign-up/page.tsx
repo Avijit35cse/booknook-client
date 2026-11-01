@@ -2,7 +2,7 @@
 
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
-import { useState ,type SyntheticEvent } from "react";
+import { useState } from "react";
 
 
 const SignUpPage = () => {
