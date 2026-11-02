@@ -1,11 +1,15 @@
 "use client";
 import { authClient } from '@/lib/auth-client';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useState , Suspense } from 'react';
 
 
-const SignInPage = () => {
+const SignInForm = () => {
+
+    const searchParams = useSearchParams();
+    const callbackURL = searchParams.get("callbackURL") || "/";
+   
 
     const router = useRouter();
 
@@ -34,8 +38,8 @@ const SignInPage = () => {
             }
 
             console.log("Sign in successful:", data);
-            router.push("/");
-            router.refresh();
+            window.location.assign(callbackURL);
+            // router.refresh();
         } catch (error) {
             setErrorMessage("Something went wrong. Please try again.");
             console.error("Sign in error:", error);
@@ -49,7 +53,7 @@ const SignInPage = () => {
         try {
             const { error } = await authClient.signIn.social({
                 provider: "google",
-                callbackURL: "http://localhost:3000/",
+                callbackURL: `${window.location.origin}${callbackURL}`,
             });
 
             if (error) {
@@ -104,5 +108,16 @@ const SignInPage = () => {
         </div>
     );
 };
+
+const SignInPage = () => {
+    return (
+        <div>
+            <h1>Sign In</h1>
+            <Suspense fallback={<p>Loading sign-in ...</p>}>
+                <SignInForm />
+            </Suspense>
+        </div>
+    );
+}
 
 export default SignInPage;

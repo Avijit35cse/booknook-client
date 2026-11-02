@@ -1,4 +1,5 @@
 import Image from "next/image";
+import BorrowButton from "@/components/books/BorrowButton";
 
 interface BookDetailsPageProps {
     params: Promise<{
@@ -39,6 +40,7 @@ const BookDetailsPage = async ({ params }: BookDetailsPageProps) => {
                 alt={book.title}
                 width={256}
                 height={320}
+                loading="eager"
                 className="w-64 h-80 object-cover rounded-lg"
             />
 
@@ -47,6 +49,7 @@ const BookDetailsPage = async ({ params }: BookDetailsPageProps) => {
             <p>Category: {book.category}</p>
             <p>{book.description}</p>
             <p>Available Copies: {book.availableCopies}</p>
+            <BorrowButton />
         </div>
     );
 };
