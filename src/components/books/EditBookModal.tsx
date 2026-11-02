@@ -1,8 +1,10 @@
-
 "use client";
 
 import Image from "next/image";
 import { useState } from "react";
+import { ImagePlus, Loader2, X } from "lucide-react";
+
+import { toast } from "@/components/ui/toast";
 
 type Book = {
     _id: string;
@@ -21,6 +23,11 @@ type Props = {
     onUpdated: (updatedBook: Book) => void;
 };
 
+const fieldClassName =
+    "h-11 w-full rounded-lg border border-border bg-background px-3.5 text-sm text-foreground transition-colors placeholder:text-muted-foreground/70 focus:border-primary/50 focus-visible:ring-2 focus-visible:ring-ring/30 focus-visible:outline-none";
+
+const labelClassName = "mb-1.5 block text-sm font-medium text-foreground";
+
 export default function EditBookModal({ book, onClose, onUpdated }: Props) {
     const [form, setForm] = useState({
         title: book.title,
@@ -33,7 +40,6 @@ export default function EditBookModal({ book, onClose, onUpdated }: Props) {
 
     const [loading, setLoading] = useState(false);
     const [uploading, setUploading] = useState(false);
-    const [error, setError] = useState("");
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -50,12 +56,11 @@ export default function EditBookModal({ book, onClose, onUpdated }: Props) {
         if (!file) return;
 
         if (!file.type.startsWith("image/")) {
-            setError("Please select an image.");
+            toast.error("That file is not an image", "Please choose a JPG, PNG, or WebP file.");
             return;
         }
 
         setUploading(true);
-        setError("");
 
         try {
             const key = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
@@ -75,8 +80,12 @@ export default function EditBookModal({ book, onClose, onUpdated }: Props) {
             }
 
             setForm(prev => ({ ...prev, image: result.data.display_url }));
+            toast.success("Cover updated", "The new cover is ready to save.");
         } catch (err) {
-            setError(err instanceof Error ? err.message : "Upload failed.");
+            toast.error(
+                "Could not upload the cover",
+                err instanceof Error ? err.message : "Upload failed."
+            );
         } finally {
             setUploading(false);
         }
@@ -88,17 +97,19 @@ export default function EditBookModal({ book, onClose, onUpdated }: Props) {
         const borrowedCopies = book.totalCopies - book.availableCopies;
 
         if (form.totalCopies < 1 || !Number.isInteger(form.totalCopies)) {
-            setError("Total copies must be at least 1.");
+            toast.error("Invalid copy count", "Total copies must be at least 1.");
             return;
         }
 
         if (form.totalCopies < borrowedCopies) {
-            setError(`At least ${borrowedCopies} copies are currently borrowed.`);
+            toast.error(
+                "Too few copies",
+                `At least ${borrowedCopies} copies are currently borrowed.`
+            );
             return;
         }
 
         setLoading(true);
-        setError("");
 
         try {
             const updatedBook = {
@@ -118,94 +129,194 @@ export default function EditBookModal({ book, onClose, onUpdated }: Props) {
             onUpdated({ ...book, ...updatedBook });
             onClose();
         } catch (err) {
-            setError(err instanceof Error ? err.message : "Update failed.");
+            toast.error(
+                "Could not update the book",
+                err instanceof Error ? err.message : "Update failed."
+            );
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
-            <div className="w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-xl bg-white p-6 text-gray-900">
-                <div className="mb-5 flex justify-between">
-                    <h2 className="text-2xl font-bold">Edit Book</h2>
-                    <button type="button" onClick={onClose} className="text-2xl">×</button>
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-foreground/40 p-0 backdrop-blur-[2px] sm:items-center sm:p-4">
+            <div
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="edit-book-title"
+                className="max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-t-2xl border border-border bg-card p-5 text-card-foreground shadow-xl sm:rounded-2xl sm:p-6"
+            >
+                <div className="flex items-start justify-between gap-4">
+                    <div>
+                        <h2 id="edit-book-title" className="font-heading text-2xl font-semibold">
+                            Edit book
+                        </h2>
+                        <p className="mt-1 text-sm text-muted-foreground">
+                            Update the details shown on the BookNook shelf.
+                        </p>
+                    </div>
+
+                    <button
+                        type="button"
+                        onClick={onClose}
+                        aria-label="Close edit dialog"
+                        className="-mr-1 -mt-1 flex size-8 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:outline-none"
+                    >
+                        <X className="size-4" aria-hidden />
+                    </button>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    <input
-                        name="title"
-                        value={form.title}
-                        onChange={handleChange}
-                        placeholder="Book Title"
-                        required
-                        className="w-full rounded-lg border p-3"
-                    />
+                <form onSubmit={handleSubmit} className="mt-6 grid gap-4 sm:grid-cols-2">
+                    <div className="sm:col-span-2">
+                        <label htmlFor="edit-title" className={labelClassName}>
+                            Title
+                        </label>
+                        <input
+                            id="edit-title"
+                            name="title"
+                            value={form.title}
+                            onChange={handleChange}
+                            placeholder="Book title"
+                            required
+                            className={fieldClassName}
+                        />
+                    </div>
 
-                    <input
-                        name="author"
-                        value={form.author}
-                        onChange={handleChange}
-                        placeholder="Author"
-                        required
-                        className="w-full rounded-lg border p-3"
-                    />
+                    <div>
+                        <label htmlFor="edit-author" className={labelClassName}>
+                            Author
+                        </label>
+                        <input
+                            id="edit-author"
+                            name="author"
+                            value={form.author}
+                            onChange={handleChange}
+                            placeholder="Author"
+                            required
+                            className={fieldClassName}
+                        />
+                    </div>
 
-                    <select
-                        name="category"
-                        value={form.category}
-                        onChange={handleChange}
-                        required
-                        className="w-full rounded-lg border p-3"
-                    >
-                        <option value="">Select Category</option>
-                        {["Fiction", "Science", "History", "Kids", "Others"].map(category => (
-                            <option key={category} value={category}>{category}</option>
-                        ))}
-                    </select>
+                    <div>
+                        <label htmlFor="edit-category" className={labelClassName}>
+                            Category
+                        </label>
+                        <select
+                            id="edit-category"
+                            name="category"
+                            value={form.category}
+                            onChange={handleChange}
+                            required
+                            className={fieldClassName}
+                        >
+                            <option value="">Select category</option>
+                            {["Fiction", "Science", "History", "Kids", "Others"].map(category => (
+                                <option key={category} value={category}>{category}</option>
+                            ))}
+                        </select>
+                    </div>
 
-                    <textarea
-                        name="description"
-                        value={form.description}
-                        onChange={handleChange}
-                        placeholder="Book Description"
-                        required
-                        rows={4}
-                        className="w-full rounded-lg border p-3"
-                    />
+                    <div className="sm:col-span-2">
+                        <label htmlFor="edit-description" className={labelClassName}>
+                            Description
+                        </label>
+                        <textarea
+                            id="edit-description"
+                            name="description"
+                            value={form.description}
+                            onChange={handleChange}
+                            placeholder="Book description"
+                            required
+                            rows={4}
+                            className="w-full resize-y rounded-lg border border-border bg-background px-3.5 py-3 text-sm text-foreground transition-colors placeholder:text-muted-foreground/70 focus:border-primary/50 focus-visible:ring-2 focus-visible:ring-ring/30 focus-visible:outline-none"
+                        />
+                    </div>
 
-                    <input
-                        type="number"
-                        name="totalCopies"
-                        min="1"
-                        value={form.totalCopies}
-                        onChange={handleChange}
-                        required
-                        className="w-full rounded-lg border p-3"
-                    />
+                    <div>
+                        <label htmlFor="edit-copies" className={labelClassName}>
+                            Total copies
+                        </label>
+                        <input
+                            id="edit-copies"
+                            type="number"
+                            name="totalCopies"
+                            min="1"
+                            value={form.totalCopies}
+                            onChange={handleChange}
+                            required
+                            className={fieldClassName}
+                        />
+                    </div>
 
-                    <input type="file" accept="image/*" onChange={handleImageUpload} />
+                    <div>
+                        <span className={labelClassName}>Book cover</span>
+                        <div className="flex items-center gap-3">
+                            <div className="relative h-16 w-12 shrink-0 overflow-hidden rounded-md border border-border bg-secondary">
+                                {form.image ? (
+                                    <Image
+                                        src={form.image}
+                                        alt="Book cover"
+                                        fill
+                                        sizes="48px"
+                                        className="object-cover"
+                                    />
+                                ) : (
+                                    <ImagePlus
+                                        className="absolute inset-0 m-auto size-4 text-muted-foreground"
+                                        aria-hidden
+                                    />
+                                )}
+                            </div>
 
-                    {uploading && <p>Uploading image...</p>}
+                            <label
+                                htmlFor="edit-image"
+                                className="inline-flex h-10 flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg border border-border bg-background px-3 text-xs font-medium transition-colors hover:bg-muted focus-within:ring-2 focus-within:ring-ring/40"
+                            >
+                                {uploading ? (
+                                    <>
+                                        <Loader2 className="size-3.5 animate-spin" aria-hidden />
+                                        Uploading…
+                                    </>
+                                ) : (
+                                    <>
+                                        <ImagePlus className="size-3.5" aria-hidden />
+                                        Replace
+                                    </>
+                                )}
+                            </label>
 
-                    {form.image && (
-                        <div className="relative h-40 w-28">
-                            <Image src={form.image} alt="Book cover" fill className="rounded object-cover" />
+                            <input
+                                id="edit-image"
+                                type="file"
+                                accept="image/*"
+                                onChange={handleImageUpload}
+                                disabled={uploading}
+                                className="sr-only"
+                            />
                         </div>
-                    )}
+                    </div>
 
-                    {error && <p className="text-red-600">{error}</p>}
-
-                    <div className="flex gap-3">
-                        <button type="button" onClick={onClose} className="flex-1 rounded-lg border py-3">
+                    <div className="mt-2 flex flex-col-reverse gap-3 border-t border-border pt-5 sm:col-span-2 sm:flex-row sm:justify-end">
+                        <button
+                            type="button"
+                            onClick={onClose}
+                            className="inline-flex h-11 items-center justify-center rounded-lg border border-border bg-background px-5 text-sm font-medium transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:outline-none"
+                        >
                             Cancel
                         </button>
                         <button
                             type="submit"
                             disabled={loading || uploading}
-                            className="flex-1 rounded-lg bg-blue-600 py-3 text-white disabled:opacity-50"
+                            className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-primary px-6 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-60"
                         >
-                            {loading ? "Updating..." : "Update Book"}
+                            {loading ? (
+                                <>
+                                    <Loader2 className="size-4 animate-spin" aria-hidden />
+                                    Updating…
+                                </>
+                            ) : (
+                                "Save changes"
+                            )}
                         </button>
                     </div>
                 </form>

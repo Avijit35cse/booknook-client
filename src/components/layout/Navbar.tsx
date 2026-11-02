@@ -22,6 +22,7 @@ import {
 
 import { Menu, BookOpen } from "lucide-react";
 import UserProfileDropdown from "@/components/layout/UserProfileDropdown";
+import { toast } from "@/components/ui/toast";
 
 export default function Navbar() {
 
@@ -36,9 +37,11 @@ export default function Navbar() {
 
         if (error) {
             console.error("Sign out failed:", error);
+            toast.error("Could not sign out", "Please try again.");
             return;
         }
 
+        toast.success("Signed out", "See you at your next chapter.");
         router.push("/");
         router.refresh();
     };

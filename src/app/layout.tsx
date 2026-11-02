@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { Toaster } from "@/components/ui/toast";
 
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
@@ -35,10 +36,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <Navbar></Navbar>
-        <main>
+        <main className="flex-1">
           {children}
         </main>
         <Footer></Footer>
+        <Toaster />
         </body>
     </html>
   );
