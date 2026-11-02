@@ -45,7 +45,7 @@ export default function Navbar() {
 
     const navLinks = [
         { name: "Home", href: "/" },
-        { name: "All Books", href: "/all-books" },
+        { name: "All Books", href: "/books" },
         ...(user
             ? [ 
                 { name: "Add Book", href: "/add-book" },

@@ -1,4 +1,5 @@
 "use client";
+import Image from 'next/image';
 import { authClient } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -64,9 +65,67 @@ const MyBorrowPage = () => {
         return <p>Redirecting to Sign In...</p>;
     }
 
+    const handleReturn = async (borrowId: string) => {
+        try {
+            const response = await fetch(
+                `http://localhost:5000/borrows/${borrowId}`,
+                {
+                    method: "DELETE",
+                }
+            );
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.message || "Failed to return book");
+            }
+
+            setBorrows((previousBorrows) =>
+                previousBorrows.filter((borrow) => borrow._id !== borrowId)
+            );
+
+        } catch (error) {
+            console.error("Return error:", error);
+        }
+    };
+
     return (
         <div>
-            <h1>My Borrows Page</h1>
+            <h1>My Borrows</h1>
+
+            {loading ? (
+                <p>Loading borrow records...</p>
+            ) : borrows.length === 0 ? (
+                <p>You have not borrowed any books yet.</p>
+            ) : (
+                <div>
+                    {borrows.map((borrow) => (
+                        <div key={borrow._id}>
+                            <Image
+                                src={borrow.bookImage}
+                                alt={borrow.bookTitle}
+                                width={100}
+                                height={150}
+                            />
+
+                            <h2>{borrow.bookTitle}</h2>
+
+                            <p>
+                                Borrow Date:{" "}
+                                {new Date(borrow.borrowDate).toLocaleDateString()}
+                            </p>
+
+                            <p>
+                                Return Date:{" "}
+                                {new Date(borrow.returnDate).toLocaleDateString()}
+                            </p>
+                            <button onClick={() => handleReturn(borrow._id)}>
+                                Return Book
+                            </button>
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
     );
 };
