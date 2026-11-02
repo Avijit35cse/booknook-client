@@ -49,7 +49,12 @@ const BookDetailsPage = async ({ params }: BookDetailsPageProps) => {
             <p>Category: {book.category}</p>
             <p>{book.description}</p>
             <p>Available Copies: {book.availableCopies}</p>
-            <BorrowButton />
+            <BorrowButton
+                bookId={book._id}
+                availableCopies={book.availableCopies}
+                bookTitle={book.title}
+                bookImage={book.image}
+            />
         </div>
     );
 };
