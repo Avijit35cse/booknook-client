@@ -13,6 +13,7 @@ const SignUpPage = () => {
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [image, setImage] = useState("")
 
     //Loading state & Error Message state
 
@@ -39,7 +40,7 @@ const SignUpPage = () => {
             setErrorMessage("Password must contain at least one lowercase letter.");
             return;
         }
- 
+
         setIsLoading(true);
         try {
 
@@ -47,6 +48,7 @@ const SignUpPage = () => {
                 name,
                 email,
                 password,
+                image,
                 callbackURL: "/sign-in",
             });
 
@@ -78,6 +80,14 @@ const SignUpPage = () => {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                 />
+
+                <input
+                    type="url"
+                    placeholder="Your Photo URL"
+                    value={image}
+                    onChange={(e) => setImage(e.target.value)}
+                />
+
                 <input
                     type="email"
                     placeholder="Email"
