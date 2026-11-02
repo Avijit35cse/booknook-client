@@ -67,9 +67,23 @@ const SignUpPage = () => {
         } finally {
             setIsLoading(false);
         }
-
-
     }
+
+    const handleGoogleSignUp = async () => {
+        try {
+            const { error } = await authClient.signIn.social({
+                provider: "google",
+                callbackURL: "http://localhost:3000/",
+            });
+
+            if (error) {
+                setErrorMessage(error.message || "Google sign up failed.");
+            }
+        } catch (error) {
+            setErrorMessage("Something went wrong with Google sign up.");
+            console.error(error);
+        }
+    };
 
     return (
         <div>
@@ -109,6 +123,14 @@ const SignUpPage = () => {
                     {isLoading ? "Signing Up..." : "Sign Up"}
                 </button>
             </form>
+
+            <button
+                type="button"
+                onClick={handleGoogleSignUp}
+            >
+                Continue with Google
+
+            </button>
 
             <p>
                 Already have an account?{" "}
