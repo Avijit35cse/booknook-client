@@ -4,7 +4,6 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
-
 import { Button } from "@/components/ui/button";
 import {
     Avatar,
@@ -22,6 +21,7 @@ import {
 } from "@/components/ui/sheet";
 
 import { Menu, BookOpen } from "lucide-react";
+import UserProfileDropdown from "@/components/layout/UserProfileDropdown";
 
 export default function Navbar() {
 
@@ -47,7 +47,7 @@ export default function Navbar() {
         { name: "Home", href: "/" },
         { name: "All Books", href: "/books" },
         ...(user
-            ? [ 
+            ? [
                 { name: "Add Book", href: "/add-book" },
                 { name: "My Books", href: "/my-books" },
                 { name: "My Borrows", href: "/my-borrows" },
@@ -89,25 +89,7 @@ export default function Navbar() {
                             Loading...
                         </span>
                     ) : user ? (
-                        <>
-                            <span className="text-sm text-foreground">
-                                Hi, {user.name}
-                            </span>
-
-                            <Avatar className="h-9 w-9">
-                                <AvatarImage
-                                    src={user.image || ""}
-                                    alt={user.name}
-                                />
-                                <AvatarFallback>
-                                    {user.name?.charAt(0).toUpperCase() || "U"}
-                                </AvatarFallback>
-                            </Avatar>
-
-                            <Button onClick={handleSignOut} size="sm">
-                                Sign Out
-                            </Button>
-                        </>
+                        <UserProfileDropdown user={user} />
                     ) : (
                         <Link
                             href="/sign-in"
@@ -123,7 +105,7 @@ export default function Navbar() {
                 <div className="md:hidden">
                     <Sheet>
                         <SheetTrigger
-                          nativeButton = {true}
+                            nativeButton={true}
                             render={
                                 <Button
                                     variant="outline"
@@ -146,7 +128,7 @@ export default function Navbar() {
                                 {navLinks.map((link) => (
                                     <SheetClose
                                         key={link.href}
-                                        nativeButton = {false} 
+                                        nativeButton={false}
                                         render={
                                             <Link
                                                 href={link.href}
@@ -187,7 +169,7 @@ export default function Navbar() {
                                         </div>
                                     ) : (
                                         <SheetClose
-                                            nativeButton = {false}
+                                            nativeButton={false}
                                             render={
                                                 <Link
                                                     href="/sign-in"
