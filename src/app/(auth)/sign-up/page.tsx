@@ -1,6 +1,7 @@
 "use client";
 
 import { authClient } from "@/lib/auth-client";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -12,7 +13,7 @@ const SignUpPage = () => {
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    
+
     //Loading state & Error Message state
 
     const [isLoading, setIsLoading] = useState(false);
@@ -20,41 +21,42 @@ const SignUpPage = () => {
 
 
 
-    const handleSubmit = async(e: React.SyntheticEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         setErrorMessage("")
-        if(password.length < 8){
+        if (password.length < 8) {
             setErrorMessage("Password must be at least 8 characters.")
             return;
         }
 
         setIsLoading(true);
-         try{
+        try {
 
-            const {data, error} = await authClient.signUp.email({
-            name,
-            email,
-            password,
-        });
+            const { data, error } = await authClient.signUp.email({
+                name,
+                email,
+                password,
+                callbackURL: "/sign-in",
+            });
 
-        if (error) {
-            setErrorMessage(error.message || "Registration failed.")
-            return;
-        }
+            if (error) {
+                setErrorMessage(error.message || "Registration failed.")
+                return;
+            }
 
-        console.log("Registration successful:", data);
-        router.push("/sign-in");
+            console.log("Registration successful:", data);
+            router.push("/sign-in");
 
-         } catch(error){
+        } catch (error) {
             setErrorMessage("Something went wrong. Please try again.")
             console.error("Registration error:", error);
-            
-         } finally {
-            setIsLoading(false);
-         }
 
-        
+        } finally {
+            setIsLoading(false);
+        }
+
+
     }
 
     return (
@@ -85,12 +87,19 @@ const SignUpPage = () => {
                 )}
                 <button type="submit" disabled={isLoading}>
                     {isLoading ? "Signing Up..." : "Sign Up"}
-                    </button>
+                </button>
             </form>
+
+            <p>
+                Already have an account?{" "}
+                <Link href="/sign-in">
+                    Sign In
+                </Link>
+            </p>
         </div>
     );
 }
-        
-  
+
+
 
 export default SignUpPage;
