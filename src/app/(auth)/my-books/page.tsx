@@ -45,7 +45,7 @@ const MyBooksPage = () => {
         const loadBooks = async () => {
             try {
                 const response = await fetch(
-                    `http://localhost:5000/books?addedBy=${encodeURIComponent(session.user.email)}`,
+                    `${process.env.NEXT_PUBLIC_API_URL}/books?addedBy=${encodeURIComponent(session.user.email)}`,
                     { signal: controller.signal }
                 );
 

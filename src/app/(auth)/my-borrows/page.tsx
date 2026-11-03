@@ -50,7 +50,7 @@ const MyBorrowPage = () => {
 
             try {
                 const response = await fetch(
-                    `http://localhost:5000/borrows?userEmail=${encodeURIComponent(session.user.email)}`
+                    `${process.env.NEXT_PUBLIC_API_URL}/borrows?userEmail=${encodeURIComponent(session.user.email)}`
                 );
 
                 if (!response.ok) {
@@ -82,7 +82,7 @@ const MyBorrowPage = () => {
 
         try {
             const response = await fetch(
-                `http://localhost:5000/borrows/${borrowId}`,
+                `${process.env.NEXT_PUBLIC_API_URL}/borrows/${borrowId}`,
                 {
                     method: "DELETE",
                 }
