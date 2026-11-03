@@ -24,7 +24,7 @@ export const instant = false;
 const BookDetailsPage = async ({ params }: BookDetailsPageProps) => {
     const { id } = await params;
 
-    const response = await fetch(`http://localhost:5000/books/${id}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/books/${id}`, {
         cache: "no-store",
     });
 

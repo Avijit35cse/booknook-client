@@ -129,7 +129,7 @@ const AddBookPage = () => {
                 addedDate: new Date(),
             };
 
-            const response = await fetch("http://localhost:5000/books", {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/books`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

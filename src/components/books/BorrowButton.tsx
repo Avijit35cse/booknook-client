@@ -53,7 +53,7 @@ const BorrowButton = ({
         };
 
         try {
-            const response = await fetch("http://localhost:5000/borrows", {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/borrows`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

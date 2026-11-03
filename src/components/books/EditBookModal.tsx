@@ -117,7 +117,7 @@ export default function EditBookModal({ book, onClose, onUpdated }: Props) {
                 availableCopies: form.totalCopies - borrowedCopies,
             };
 
-            const response = await fetch(`http://localhost:5000/books/${book._id}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/books/${book._id}`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(updatedBook),
