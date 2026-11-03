@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { authClient } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { BookOpen, CalendarDays, Library, Loader2 } from 'lucide-react';
+import { BookOpen, CalendarDays, ImageOff, Library, Loader2 } from 'lucide-react';
 
 import { toast } from '@/components/ui/toast';
 
@@ -209,13 +209,25 @@ const MyBorrowPage = () => {
                                     className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-4 shadow-sm transition-shadow hover:shadow-md sm:flex-row sm:p-5"
                                 >
                                     <div className="relative aspect-[3/4] w-24 shrink-0 overflow-hidden rounded-lg border border-border bg-secondary sm:w-28">
-                                        <Image
-                                            src={borrow.bookImage}
-                                            alt={borrow.bookTitle}
-                                            fill
-                                            sizes="112px"
-                                            className="object-cover"
-                                        />
+                                        {borrow.bookImage ? (
+                                            <Image
+                                                src={borrow.bookImage}
+                                                alt={borrow.bookTitle}
+                                                fill
+                                                sizes="112px"
+                                                className="object-cover"
+                                            />
+                                        ) : (
+                                            <div className="flex h-full flex-col items-center justify-center gap-1.5 px-2 text-center text-muted-foreground">
+                                                <ImageOff
+                                                    className="size-5"
+                                                    aria-hidden
+                                                />
+                                                <span className="text-[10px] leading-tight font-medium">
+                                                    No cover
+                                                </span>
+                                            </div>
+                                        )}
                                     </div>
 
                                     <div className="min-w-0 flex-1">
