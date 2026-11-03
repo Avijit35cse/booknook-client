@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, BookMarked, Layers, Tag } from "lucide-react";
 import BorrowButton from "@/components/books/BorrowButton";
+import ProtectedRoute from "@/components/auth/ProtectedRoute";
 
 interface BookDetailsPageProps {
     params: Promise<{
@@ -38,6 +39,7 @@ const BookDetailsPage = async ({ params }: BookDetailsPageProps) => {
     const isAvailable = book.availableCopies > 0;
 
     return (
+        <ProtectedRoute>
         <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-14">
             <Link
                 href="/books"
@@ -150,6 +152,7 @@ const BookDetailsPage = async ({ params }: BookDetailsPageProps) => {
                 </div>
             </div>
         </div>
+        </ProtectedRoute>
     );
 };
 
