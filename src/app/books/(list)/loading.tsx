@@ -1,3 +1,5 @@
+import { BookOpen } from "lucide-react";
+
 const skeletonCards = Array.from({ length: 6 }, (_, index) => index);
 
 export default function Loading() {
@@ -6,8 +8,18 @@ export default function Loading() {
             <div className="h-4 w-40 animate-pulse rounded bg-muted" />
             <div className="mt-4 h-9 w-52 animate-pulse rounded bg-muted" />
             <div className="mt-3 h-4 w-full max-w-xl animate-pulse rounded bg-muted" />
+            <div className="relative mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="col-span-full flex flex-col items-center justify-center gap-3 py-6">
+                    <div className="relative flex size-16 items-center justify-center">
+                        <div className="absolute inset-0 rounded-full border-4 border-primary/15" />
+                        <div className="absolute inset-0 animate-spin rounded-full border-4 border-transparent border-t-primary" />
+                        <BookOpen className="size-6 text-primary" />
+                    </div>
 
-            <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    <p className="text-sm font-medium text-muted-foreground">
+                        Loading books...
+                    </p>
+                </div>
                 {skeletonCards.map((card) => (
                     <div
                         key={card}
