@@ -45,7 +45,7 @@ const MyBooksPage = () => {
 
         const loadBooks = async () => {
             try {
-                const response = await apiFetch("/books?myBooks=true", {
+                const response = await apiFetch("books/my-books", {
                     signal: controller.signal,
                 });
 
