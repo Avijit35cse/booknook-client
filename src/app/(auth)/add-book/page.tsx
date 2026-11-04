@@ -274,6 +274,7 @@ const AddBookPage = () => {
                             placeholder="e.g. The Midnight Library"
                             value={formData.title}
                             onChange={handleChange}
+                            required
                             className={fieldClassName}
                         />
                     </div>
@@ -289,6 +290,7 @@ const AddBookPage = () => {
                             placeholder="e.g. Matt Haig"
                             value={formData.author}
                             onChange={handleChange}
+                            required
                             className={fieldClassName}
                         />
                     </div>
@@ -302,6 +304,7 @@ const AddBookPage = () => {
                             name="category"
                             value={formData.category}
                             onChange={handleChange}
+                            required
                             className={fieldClassName}
                         >
                             <option value="">Select category</option>
@@ -323,6 +326,7 @@ const AddBookPage = () => {
                             placeholder="What is this book about?"
                             value={formData.description}
                             onChange={handleChange}
+                            required
                             rows={5}
                             className="w-full resize-y rounded-lg border border-border bg-background px-3.5 py-3 text-sm text-foreground transition-colors placeholder:text-muted-foreground/70 focus:border-primary/50 focus-visible:ring-2 focus-visible:ring-ring/30 focus-visible:outline-none"
                         />
@@ -339,6 +343,7 @@ const AddBookPage = () => {
                             min="1"
                             value={formData.totalCopies}
                             onChange={handleChange}
+                            required
                             className={fieldClassName}
                         />
                     </div>
@@ -346,7 +351,33 @@ const AddBookPage = () => {
                     <p className="self-end text-sm text-muted-foreground sm:pb-3">
                         Available copies will match the total when you add the book.
                     </p>
+                    <div className="sm:col-span-2 grid gap-4 sm:grid-cols-2">
+                        <div>
+                            <label htmlFor="addedByName" className={labelClassName}>
+                                Your name
+                            </label>
+                            <input
+                                id="addedByName"
+                                type="text"
+                                value={session.user.name ?? ""}
+                                readOnly
+                                className={fieldClassName}
+                            />
+                        </div>
 
+                        <div>
+                            <label htmlFor="addedByEmail" className={labelClassName}>
+                                Your email
+                            </label>
+                            <input
+                                id="addedByEmail"
+                                type="email"
+                                value={session.user.email ?? ""}
+                                readOnly
+                                className={fieldClassName}
+                            />
+                        </div>
+                    </div>
                     <div className="mt-2 flex flex-col-reverse gap-3 border-t border-border pt-5 sm:col-span-2 sm:flex-row sm:items-center sm:justify-end">
                         <button
                             type="button"
