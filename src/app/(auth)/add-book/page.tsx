@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { BookPlus, ImagePlus, Loader2, UploadCloud } from 'lucide-react';
 
 import { toast } from '@/components/ui/toast';
+import { apiFetch } from '@/lib/api';
 
 type BookFormData = {
     title: string;
@@ -129,13 +130,13 @@ const AddBookPage = () => {
                 addedDate: new Date(),
             };
 
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/books`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(bookData),
-            });
+            const response = await apiFetch("/books", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify(bookData),
+});
 
             const result = await response.json();
 

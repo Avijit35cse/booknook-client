@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { BookPlus, Library, Pencil, Trash2 } from "lucide-react";
 
 import { toast } from "@/components/ui/toast";
+import { apiFetch } from "@/lib/api";
 
 type Book = {
     _id: string;
@@ -44,10 +45,9 @@ const MyBooksPage = () => {
 
         const loadBooks = async () => {
             try {
-                const response = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL}/books?addedBy=${encodeURIComponent(session.user.email)}`,
-                    { signal: controller.signal }
-                );
+                const response = await apiFetch("/books?myBooks=true", {
+                    signal: controller.signal,
+                });
 
                 if (!response.ok) throw new Error("Failed to fetch books");
 
@@ -160,13 +160,19 @@ const MyBooksPage = () => {
                             className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md motion-reduce:transform-none motion-reduce:transition-none"
                         >
                             <div className="relative aspect-[3/4] overflow-hidden bg-secondary">
-                                <Image
-                                    src={book.image}
-                                    alt={book.title}
-                                    fill
-                                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03] motion-reduce:transform-none motion-reduce:transition-none"
-                                />
+                                {book.image ? (
+                                    <Image
+                                        src={book.image}
+                                        alt={book.title}
+                                        fill
+                                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                        className="object-cover transition-transform duration-500 group-hover:scale-[1.03] motion-reduce:transform-none motion-reduce:transition-none"
+                                    />
+                                ) : (
+                                    <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
+                                        No cover available
+                                    </div>
+                                )}
                                 <span className="absolute top-3 left-3 rounded-full bg-background/95 px-2.5 py-1 text-xs font-semibold text-foreground shadow-sm backdrop-blur">
                                     {book.category}
                                 </span>

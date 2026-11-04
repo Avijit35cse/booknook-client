@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Loader2, Trash2, X } from "lucide-react";
 
 import { toast } from "@/components/ui/toast";
+import { apiFetch } from "@/lib/api";
 
 type Props = {
     bookId: string;
@@ -24,7 +25,7 @@ export default function DeleteBookModal({
         setLoading(true);
 
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/books/${bookId}`, {
+            const response = await apiFetch(`/books/${bookId}`, {
                 method: "DELETE",
             });
 

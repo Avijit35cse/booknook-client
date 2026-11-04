@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { BookOpen, CalendarDays, ImageOff, Library, Loader2 } from 'lucide-react';
 
 import { toast } from '@/components/ui/toast';
+import { apiFetch } from '@/lib/api';
 
 type BorrowRecord = {
     _id: string;
@@ -49,9 +50,7 @@ const MyBorrowPage = () => {
             if (!session?.user?.email) return;
 
             try {
-                const response = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL}/borrows?userEmail=${encodeURIComponent(session.user.email)}`
-                );
+                const response = await apiFetch("/borrows");
 
                 if (!response.ok) {
                     throw new Error("Failed to fetch borrow records");
@@ -81,12 +80,9 @@ const MyBorrowPage = () => {
         setReturningId(borrowId);
 
         try {
-            const response = await fetch(
-                `${process.env.NEXT_PUBLIC_API_URL}/borrows/${borrowId}`,
-                {
-                    method: "DELETE",
-                }
-            );
+            const response = await apiFetch(`/borrows/${borrowId}`, {
+                method: "DELETE",
+            });
 
             const result = await response.json();
 

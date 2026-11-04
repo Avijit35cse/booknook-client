@@ -6,6 +6,7 @@ import { useState } from "react";
 import { BookOpen, Loader2, X } from "lucide-react";
 
 import { toast } from "@/components/ui/toast";
+import { apiFetch } from "@/lib/api";
 
 type BorrowButtonProps = {
     bookId: string;
@@ -53,7 +54,7 @@ const BorrowButton = ({
         };
 
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/borrows`, {
+            const response = await apiFetch("/borrows", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

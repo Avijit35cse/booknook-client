@@ -5,6 +5,7 @@ import { useState } from "react";
 import { ImagePlus, Loader2, X } from "lucide-react";
 
 import { toast } from "@/components/ui/toast";
+import { apiFetch } from "@/lib/api";
 
 type Book = {
     _id: string;
@@ -117,7 +118,7 @@ export default function EditBookModal({ book, onClose, onUpdated }: Props) {
                 availableCopies: form.totalCopies - borrowedCopies,
             };
 
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/books/${book._id}`, {
+            const response = await apiFetch(`/books/${book._id}`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(updatedBook),
