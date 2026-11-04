@@ -12,7 +12,10 @@ export async function apiFetch(
         throw new Error("Authentication required. Please login.");
     }
 
-    const response = await fetch(`${API_URL}${endpoint}`, {
+    const baseURL = API_URL?.replace(/\/+$/, "");
+    const path = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;
+
+    const response = await fetch(`${baseURL}${path}`, {
         ...options,
         headers: {
             ...options.headers,
