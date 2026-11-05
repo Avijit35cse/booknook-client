@@ -26,10 +26,10 @@ const linkClassName =
     "group relative inline-flex items-center text-sm text-primary-foreground/70 transition-colors duration-300 hover:text-accent focus-visible:rounded-sm focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:outline-none";
 
 const columnTitleClassName =
-    "flex items-center gap-2.5 font-heading text-lg font-semibold text-primary-foreground";
+    "flex items-center justify-center gap-2.5 font-heading text-lg font-semibold text-primary-foreground lg:justify-start";
 
 const contactRowClassName =
-    "group -mx-2 flex items-start gap-3 rounded-xl px-2 py-2 transition-colors duration-300 hover:bg-white/[0.045] focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:outline-none";
+    "group flex items-start justify-center gap-3 rounded-xl px-2 py-2 text-center transition-colors duration-300 hover:bg-white/[0.045] focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:outline-none lg:justify-start lg:text-left";
 
 const contactIconClassName =
     "mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] text-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-all duration-300 group-hover:border-accent/30 group-hover:bg-accent/10";
@@ -66,9 +66,9 @@ export default function Footer() {
             />
 
             <div className="relative mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
-                <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.55fr_0.85fr_0.85fr_1.3fr] lg:gap-14">
+                <div className="grid grid-cols-1 gap-10 text-center sm:grid-cols-2 lg:grid-cols-[1.55fr_0.85fr_0.85fr_1.3fr] lg:gap-14 lg:text-left">
                     {/* Brand */}
-                    <div>
+                    <div className="min-w-0">
                         <Link
                             href="/"
                             className="group inline-flex items-center gap-3 rounded-xl focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:outline-none"
@@ -81,7 +81,7 @@ export default function Footer() {
                             </span>
                         </Link>
 
-                        <p className="mt-5 max-w-sm text-sm leading-relaxed text-primary-foreground/70">
+                        <p className="mx-auto mt-5 max-w-sm text-sm leading-relaxed break-words text-primary-foreground/70 lg:mx-0">
                             A calm, modern library for discovering, borrowing,
                             and keeping track of the books you love — from your
                             next chapter to the ones worth revisiting.
@@ -89,12 +89,12 @@ export default function Footer() {
 
                         <div
                             aria-hidden
-                            className="mt-6 h-px w-16 bg-linear-to-r from-accent to-transparent"
+                            className="mx-auto mt-6 h-px w-16 bg-linear-to-r from-accent to-transparent lg:mx-0"
                         />
                     </div>
 
                     {/* Explore */}
-                    <nav aria-label="Explore">
+                    <nav aria-label="Explore" className="min-w-0">
                         <h2 className={columnTitleClassName}>
                             <span
                                 aria-hidden
@@ -121,7 +121,7 @@ export default function Footer() {
                     </nav>
 
                     {/* Your library */}
-                    <nav aria-label="Your library">
+                    <nav aria-label="Your library" className="min-w-0">
                         <h2 className={columnTitleClassName}>
                             <span
                                 aria-hidden
@@ -148,7 +148,7 @@ export default function Footer() {
                     </nav>
 
                     {/* Contact */}
-                    <div>
+                    <div className="min-w-0">
                         <h2 className={columnTitleClassName}>
                             <span
                                 aria-hidden
@@ -242,7 +242,7 @@ export default function Footer() {
                                             aria-hidden
                                         />
                                     </span>
-                                    <span>
+                                    <span className="min-w-0">
                                         <span
                                             className={contactLabelClassName}
                                         >
@@ -263,7 +263,7 @@ export default function Footer() {
                     </div>
                 </div>
 
-                <div className="mt-14 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-primary-foreground/65 sm:flex-row sm:items-center sm:justify-between">
+                <div className="mt-14 flex flex-col items-center gap-3 border-t border-white/10 pt-6 text-center text-xs text-primary-foreground/65 lg:flex-row lg:items-center lg:justify-between lg:text-left">
                     <p>© {CURRENT_YEAR} BookNook. All rights reserved.</p>
                     <span
                         aria-hidden

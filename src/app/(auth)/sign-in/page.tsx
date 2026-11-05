@@ -1,7 +1,7 @@
 "use client";
 import { authClient } from '@/lib/auth-client';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useState , Suspense } from 'react';
 import {
     AlertCircle,
@@ -29,8 +29,6 @@ const SignInForm = () => {
     const searchParams = useSearchParams();
     const callbackURL = searchParams.get("callbackURL") || "/";
    
-
-    const router = useRouter();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -60,7 +58,7 @@ const SignInForm = () => {
 
             console.log("Sign in successful:", data);
             window.location.assign(callbackURL);
-            // router.refresh();
+            
         } catch (error) {
             setErrorMessage("Something went wrong. Please try again.");
             console.error("Sign in error:", error);

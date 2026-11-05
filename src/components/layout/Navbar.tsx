@@ -105,7 +105,7 @@ export default function Navbar() {
 
 
                 {/* Mobile Navigation */}
-                <div className="md:hidden">
+                <div className="flex items-center gap-2 md:hidden">
                     <Sheet>
                         <SheetTrigger
                             nativeButton={true}
@@ -187,6 +187,10 @@ export default function Navbar() {
                             </div>
                         </SheetContent>
                     </Sheet>
+
+                    {!isPending && user && (
+                        <UserProfileDropdown user={user} />
+                    )}
                 </div>
 
             </nav>
