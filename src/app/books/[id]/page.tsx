@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowLeft, BookMarked, Layers, Tag, UserRound, Mail } from "lucide-react";
 import BorrowButton from "@/components/books/BorrowButton";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
+import { notFound } from "next/navigation";
 
 
 interface BookDetailsPageProps {
@@ -32,11 +33,20 @@ const BookDetailsPage = async ({ params }: BookDetailsPageProps) => {
         cache: "no-store",
     });
 
-    if (!response.ok) {
-        throw new Error("Failed to fetch book");
-    }
+    if (response.status === 400 || response.status === 404) {
+    notFound();
+}
+
+if (!response.ok) {
+    throw new Error("Failed to fetch book");
+}
 
     const data = await response.json();
+
+    if (!data.result) {
+        notFound();
+    }
+
     const book: Book = data.result;
 
     const isAvailable = book.availableCopies > 0;

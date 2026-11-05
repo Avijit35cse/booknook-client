@@ -26,8 +26,8 @@ const NotFound = () => {
                 </div>
 
                 <p className="mx-auto mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground sm:text-base">
-                    Oops! The page you're looking for doesn't exist
-                    or may have been moved. Let's get you back to your
+                    Oops! The page you&apos;re looking for doesn&apos;t exist
+                    or may have been moved. Let&apos;s get you back to your
                     reading journey.
                 </p>
 
