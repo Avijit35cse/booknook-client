@@ -1,40 +1,15 @@
 import Link from "next/link";
-import { BookOpen, Mail, MapPin } from "lucide-react";
+import { BookOpen, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 
-/**
- * Placeholder details.
- * Replace these with BookNook's real contact address and social profile URLs
- * before going live. `.example` is a reserved, non-routable domain, so the
- * email below can never reach a real inbox.
- */
-const CONTACT_EMAIL = "hello@booknook.example";
+const CONTACT_EMAIL = "ovicse35@outlook.com";
+const WHATSAPP_NUMBER = "01812880953";
+const WHATSAPP_URL = "https://wa.me/8801812880953";
+const CONTACT_NUMBER = "01934050150";
+const LOCATION = "Dhaka, Bangladesh";
 
 // Evaluated once when the module loads (at build time for prerendered pages),
 // rather than during render, where Cache Components rejects clock reads.
 const CURRENT_YEAR = new Date().getFullYear();
-
-const socialLinks = [
-    {
-        name: "GitHub",
-        href: "#",
-        path: "M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12",
-    },
-    {
-        name: "X",
-        href: "#",
-        path: "M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z",
-    },
-    {
-        name: "Instagram",
-        href: "#",
-        path: "M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z",
-    },
-    {
-        name: "LinkedIn",
-        href: "#",
-        path: "M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z",
-    },
-];
 
 const exploreLinks = [
     { name: "Home", href: "/" },
@@ -48,32 +23,65 @@ const libraryLinks = [
 ];
 
 const linkClassName =
-    "inline-flex items-center text-sm text-primary-foreground/70 transition-colors hover:text-accent focus-visible:rounded-sm focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:outline-none";
+    "group relative inline-flex items-center text-sm text-primary-foreground/70 transition-colors duration-300 hover:text-accent focus-visible:rounded-sm focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:outline-none";
 
 const columnTitleClassName =
-    "font-heading text-lg font-semibold text-primary-foreground";
+    "flex items-center gap-2.5 font-heading text-lg font-semibold text-primary-foreground";
+
+const contactRowClassName =
+    "group -mx-2 flex items-start gap-3 rounded-xl px-2 py-2 transition-colors duration-300 hover:bg-white/[0.045] focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:outline-none";
+
+const contactIconClassName =
+    "mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] text-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-all duration-300 group-hover:border-accent/30 group-hover:bg-accent/10";
+
+const contactLabelClassName =
+    "block text-[10px] font-semibold tracking-[0.18em] text-primary-foreground/60 uppercase";
+
+const contactValueClassName =
+    "mt-0.5 block text-sm text-primary-foreground/80 transition-colors duration-300 group-hover:text-accent";
 
 export default function Footer() {
     return (
-        <footer className="border-t border-white/10 bg-primary text-primary-foreground">
-            <div className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-                <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.6fr_0.9fr_0.9fr_1.2fr] lg:gap-12">
+        <footer className="relative isolate overflow-hidden border-t border-white/[0.06] bg-primary text-primary-foreground">
+            <div
+                aria-hidden
+                className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-accent/60 to-transparent"
+            />
+            <div
+                aria-hidden
+                className="pointer-events-none absolute -top-40 left-1/4 size-[32rem] rounded-full bg-accent/[0.08] blur-3xl"
+            />
+            <div
+                aria-hidden
+                className="pointer-events-none absolute -bottom-52 right-0 size-[34rem] rounded-full bg-[#2A5A4A]/40 blur-3xl"
+            />
+            <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 [background-image:radial-gradient(circle,rgba(255,255,255,0.05)_1px,transparent_1px)] [background-size:26px_26px] [mask-image:linear-gradient(to_bottom,black,transparent_80%)]"
+            />
+            <BookOpen
+                aria-hidden
+                strokeWidth={1}
+                className="pointer-events-none absolute -right-12 -bottom-20 size-80 text-white/[0.035]"
+            />
+
+            <div className="relative mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+                <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.55fr_0.85fr_0.85fr_1.3fr] lg:gap-14">
                     {/* Brand */}
                     <div>
                         <Link
                             href="/"
-                            className="inline-flex items-center gap-2 rounded-md focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:outline-none"
+                            className="group inline-flex items-center gap-3 rounded-xl focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:outline-none"
                         >
-                            <BookOpen
-                                className="size-7 text-accent"
-                                aria-hidden
-                            />
-                            <span className="font-heading text-2xl font-bold">
+                            <span className="flex size-12 items-center justify-center rounded-2xl border border-white/15 bg-white/10 text-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.15)] transition-all duration-300 group-hover:-rotate-3 group-hover:border-accent/40 group-hover:bg-white/15">
+                                <BookOpen className="size-6" aria-hidden />
+                            </span>
+                            <span className="font-heading text-2xl font-bold tracking-tight">
                                 BookNook
                             </span>
                         </Link>
 
-                        <p className="mt-4 max-w-sm text-sm leading-relaxed text-primary-foreground/70">
+                        <p className="mt-5 max-w-sm text-sm leading-relaxed text-primary-foreground/70">
                             A calm, modern library for discovering, borrowing,
                             and keeping track of the books you love — from your
                             next chapter to the ones worth revisiting.
@@ -81,42 +89,30 @@ export default function Footer() {
 
                         <div
                             aria-hidden
-                            className="mt-5 h-1 w-12 rounded-full bg-accent"
+                            className="mt-6 h-px w-16 bg-linear-to-r from-accent to-transparent"
                         />
-
-                        <ul className="mt-6 flex items-center gap-2.5">
-                            {socialLinks.map((social) => (
-                                <li key={social.name}>
-                                    <a
-                                        href={social.href}
-                                        aria-label={`${social.name} (placeholder link)`}
-                                        title={`${social.name} — placeholder, add your profile URL`}
-                                        className="inline-flex size-10 items-center justify-center rounded-full border border-white/15 bg-white/5 text-primary-foreground/80 transition-colors hover:border-accent/60 hover:bg-accent hover:text-primary-foreground focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:outline-none"
-                                    >
-                                        <svg
-                                            viewBox="0 0 24 24"
-                                            fill="currentColor"
-                                            aria-hidden="true"
-                                            className="size-4"
-                                        >
-                                            <path d={social.path} />
-                                        </svg>
-                                    </a>
-                                </li>
-                            ))}
-                        </ul>
                     </div>
 
                     {/* Explore */}
                     <nav aria-label="Explore">
-                        <h2 className={columnTitleClassName}>Explore</h2>
-                        <ul className="mt-4 space-y-3">
+                        <h2 className={columnTitleClassName}>
+                            <span
+                                aria-hidden
+                                className="size-1.5 rounded-full bg-accent shadow-[0_0_0_4px_rgba(217,139,82,0.12)]"
+                            />
+                            Explore
+                        </h2>
+                        <ul className="mt-5 space-y-3">
                             {exploreLinks.map((link) => (
                                 <li key={link.href}>
                                     <Link
                                         href={link.href}
                                         className={linkClassName}
                                     >
+                                        <span
+                                            aria-hidden
+                                            className="absolute -left-3 h-px w-0 bg-accent transition-all duration-300 group-hover:w-2"
+                                        />
                                         {link.name}
                                     </Link>
                                 </li>
@@ -126,14 +122,24 @@ export default function Footer() {
 
                     {/* Your library */}
                     <nav aria-label="Your library">
-                        <h2 className={columnTitleClassName}>Your Library</h2>
-                        <ul className="mt-4 space-y-3">
+                        <h2 className={columnTitleClassName}>
+                            <span
+                                aria-hidden
+                                className="size-1.5 rounded-full bg-accent shadow-[0_0_0_4px_rgba(217,139,82,0.12)]"
+                            />
+                            Your Library
+                        </h2>
+                        <ul className="mt-5 space-y-3">
                             {libraryLinks.map((link) => (
                                 <li key={link.href}>
                                     <Link
                                         href={link.href}
                                         className={linkClassName}
                                     >
+                                        <span
+                                            aria-hidden
+                                            className="absolute -left-3 h-px w-0 bg-accent transition-all duration-300 group-hover:w-2"
+                                        />
                                         {link.name}
                                     </Link>
                                 </li>
@@ -143,58 +149,126 @@ export default function Footer() {
 
                     {/* Contact */}
                     <div>
-                        <h2 className={columnTitleClassName}>Contact</h2>
+                        <h2 className={columnTitleClassName}>
+                            <span
+                                aria-hidden
+                                className="size-1.5 rounded-full bg-accent shadow-[0_0_0_4px_rgba(217,139,82,0.12)]"
+                            />
+                            Contact
+                        </h2>
 
-                        <ul className="mt-4 space-y-4">
+                        <ul className="mt-5 space-y-1.5">
                             <li>
                                 <a
                                     href={`mailto:${CONTACT_EMAIL}`}
-                                    className="group inline-flex items-start gap-3 focus-visible:outline-none"
+                                    className={contactRowClassName}
                                 >
-                                    <span className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/5 text-accent">
+                                    <span className={contactIconClassName}>
                                         <Mail
                                             className="size-4"
                                             aria-hidden
                                         />
                                     </span>
                                     <span className="min-w-0">
-                                        <span className="block text-[11px] font-semibold tracking-[0.14em] text-primary-foreground/60 uppercase">
+                                        <span
+                                            className={contactLabelClassName}
+                                        >
                                             Email
                                         </span>
-                                        <span className="mt-0.5 block truncate text-sm text-primary-foreground/80 transition-colors group-hover:text-accent group-focus-visible:text-accent">
+                                        <span
+                                            className={`${contactValueClassName} truncate`}
+                                        >
                                             {CONTACT_EMAIL}
-                                        </span>
-                                        <span className="mt-0.5 block text-xs text-primary-foreground/60">
-                                            (placeholder address)
                                         </span>
                                     </span>
                                 </a>
                             </li>
 
-                            <li className="flex items-start gap-3">
-                                <span className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/5 text-accent">
-                                    <MapPin className="size-4" aria-hidden />
-                                </span>
-                                <span>
-                                    <span className="block text-[11px] font-semibold tracking-[0.14em] text-primary-foreground/60 uppercase">
-                                        Where to find us
+                            <li>
+                                <a
+                                    href={WHATSAPP_URL}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className={contactRowClassName}
+                                >
+                                    <span className={contactIconClassName}>
+                                        <MessageCircle
+                                            className="size-4"
+                                            aria-hidden
+                                        />
                                     </span>
-                                    <span className="mt-0.5 block text-sm leading-relaxed text-primary-foreground/80">
-                                        An online-first library, open to readers
-                                        everywhere.
+                                    <span className="min-w-0">
+                                        <span
+                                            className={contactLabelClassName}
+                                        >
+                                            WhatsApp
+                                        </span>
+                                        <span className={contactValueClassName}>
+                                            {WHATSAPP_NUMBER}
+                                        </span>
                                     </span>
-                                </span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a
+                                    href={`tel:${CONTACT_NUMBER}`}
+                                    className={contactRowClassName}
+                                >
+                                    <span className={contactIconClassName}>
+                                        <Phone
+                                            className="size-4"
+                                            aria-hidden
+                                        />
+                                    </span>
+                                    <span className="min-w-0">
+                                        <span
+                                            className={contactLabelClassName}
+                                        >
+                                            Contact
+                                        </span>
+                                        <span className={contactValueClassName}>
+                                            {CONTACT_NUMBER}
+                                        </span>
+                                    </span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <div className={contactRowClassName}>
+                                    <span className={contactIconClassName}>
+                                        <MapPin
+                                            className="size-4"
+                                            aria-hidden
+                                        />
+                                    </span>
+                                    <span>
+                                        <span
+                                            className={contactLabelClassName}
+                                        >
+                                            Where to find us
+                                        </span>
+                                        <span className={contactValueClassName}>
+                                            {LOCATION}
+                                        </span>
+                                        <span className="mt-1 block text-xs leading-relaxed text-primary-foreground/60">
+                                            An online-first library based in
+                                            Dhaka, Bangladesh, welcoming readers
+                                            everywhere.
+                                        </span>
+                                    </span>
+                                </div>
                             </li>
                         </ul>
                     </div>
                 </div>
 
-                <div className="mt-12 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-primary-foreground/65 sm:flex-row sm:items-center sm:justify-between">
+                <div className="mt-14 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-primary-foreground/65 sm:flex-row sm:items-center sm:justify-between">
                     <p>© {CURRENT_YEAR} BookNook. All rights reserved.</p>
-                    <p>
-                        Contact details and social links are placeholders —
-                        replace them before launch.
-                    </p>
+                    <span
+                        aria-hidden
+                        className="hidden h-px w-24 bg-linear-to-r from-accent/60 to-transparent sm:block"
+                    />
                 </div>
             </div>
         </footer>
